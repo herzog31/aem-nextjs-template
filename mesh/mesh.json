@@ -1,6 +1,9 @@
 {
   "meshConfig": {
     "responseConfig": {
+      "headers": {
+        "mode": "no-cors"
+      },
       "CORS": {
         "origin": true
       }
@@ -10,7 +13,7 @@
         "name": "Commerce",
         "handler": {
           "graphql": {
-            "endpoint": "https://venia.magento.com/graphql/"
+            "endpoint": "https://master-7rqtwti-c5v7sxvquxwl4.eu-4.magentosite.cloud/graphql"
           }
         }
       },
