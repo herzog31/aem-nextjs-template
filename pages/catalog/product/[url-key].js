@@ -21,8 +21,6 @@ import getProductByUrlKey from './getProductByUrlKey.graphql';
 import Gallery from '../../../components/Gallery';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 
-const { NEXT_PUBLIC_AEM_ROOT } = process.env;
-
 export default function Product(props) {
     const { product, pages } = props;
 
@@ -102,7 +100,7 @@ export default function Product(props) {
 }
 
 export async function getServerSideProps({ params }) {
-    const pages = await getPages(NEXT_PUBLIC_AEM_ROOT);
+    const pages = await getPages();
 
     const { data } = await client.query({
         query: getProductByUrlKey,

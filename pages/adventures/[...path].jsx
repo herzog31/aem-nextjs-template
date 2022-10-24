@@ -150,7 +150,7 @@ export async function getStaticProps({ params }) {
   const slug = params.path[0];
   const res = await client.getAdventuresBySlug(slug);
   const adventure = res?.data?.adventureList?.items[0];
-  const pages = await getPages(NEXT_PUBLIC_AEM_ROOT);
+  const pages = await getPages();
   return {
     props: {
       adventure,
