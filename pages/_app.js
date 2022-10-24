@@ -32,7 +32,7 @@ const { Panels } = await importCSROnly(() =>
 );
 
 const render = renderer?.({
-  endpoint: process.env.NEXT_COMMERCE_GRAPHQL_ENDPOINT,
+  endpoint: process.env.NEXT_PUBLIC_COMMERCE_GRAPHQL_ENDPOINT,
   mesh: 'Commerce',
 });
 
