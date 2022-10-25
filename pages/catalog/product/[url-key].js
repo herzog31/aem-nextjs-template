@@ -88,7 +88,7 @@ export default function Product(props) {
                 </h1>
 
                 <p className="text-3xl tracking-tight text-gray-900 mb-6">
-                  $192
+                  {formatter.format(value)}
                 </p>
 
                 <form ref={optionsRef} className="flex flex-col gap-6 mb-8">

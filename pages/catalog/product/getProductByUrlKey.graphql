@@ -9,9 +9,11 @@ query getProductByUrlKey($urlKey: String!) {
       categories {
         name
         url_key
+        url_path
         breadcrumbs {
           category_name
           category_url_key
+          category_url_path
         }
       }
       media_gallery {

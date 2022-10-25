@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 import OptimizedImage from './OptimizedImage';
 
-const ProductCard = ({ product, priority }) => {
+const ProductCard = ({ product, priority, highlighted }) => {
     const {
         name,
         thumbnail: {
@@ -37,7 +37,7 @@ const ProductCard = ({ product, priority }) => {
 
     return (
         <Link href={`/catalog/product/${url_key}`}>
-            <div className="cursor-pointer max-w-sm bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
+            <div className={`cursor-pointer max-w-sm rounded-lg border border-gray-200 shadow-md overflow-hidden ${highlighted ? 'bg-yellow-300' : 'bg-white'}`}>
                 <div className="rounded-t-lg">
                     <OptimizedImage className="bg-gray-200 w-full h-full object-center object-cover lg:w-full lg:h-full" src={url} alt={label} width={280} priority={priority} />
                 </div>
