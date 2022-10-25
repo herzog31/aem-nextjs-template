@@ -12,16 +12,9 @@
  */
 
 import '../styles/index.scss';
-import { ModelManager } from '@adobe/aem-spa-page-model-manager';
-import CustomModelClient from '../lib/CustomModelClient';
 import importCSROnly from '../lib/importCSROnly';
 import '../components/import-components';
 import { Fragment } from 'react';
-
-const modelClient = new CustomModelClient(process.env.NEXT_PUBLIC_AEM_HOST);
-ModelManager.initializeAsync({
-  modelClient,
-});
 
 // importCSROnly
 const { renderer } = await importCSROnly(() =>

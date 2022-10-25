@@ -17,7 +17,7 @@ import { AdventureClient } from '../../lib/adventures';
 import AdventureCard from '../../components/AdventureCard';
 import getPages from '../../lib/getPages';
 
-const { NEXT_PUBLIC_AEM_HOST, NEXT_PUBLIC_AEM_ROOT } = process.env;
+const { NEXT_PUBLIC_AEM_HOST } = process.env;
 
 export default function Adventures({ adventures, pages }) {
   return (
@@ -58,7 +58,7 @@ export async function getServerSideProps() {
   const client = AdventureClient.fromEnv();
   const res = await client.getAllAdventures();
   const adventures = res?.data?.adventureList?.items;
-  const pages = await getPages(NEXT_PUBLIC_AEM_ROOT);
+  const pages = await getPages();
   return {
     props: {
       adventures,

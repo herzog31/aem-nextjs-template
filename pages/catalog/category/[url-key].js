@@ -19,8 +19,6 @@ import getPages from '../../../lib/getPages';
 import getCategoryByUrlKey from './getCategoryByUrlKey.graphql';
 import ProductCard from '../../../components/ProductCard';
 
-const { NEXT_PUBLIC_AEM_ROOT } = process.env;
-
 export default function Category(props) {
     const { category, pages } = props;
 
@@ -46,7 +44,7 @@ export default function Category(props) {
 }
 
 export async function getServerSideProps({ params }) {
-    const pages = await getPages(NEXT_PUBLIC_AEM_ROOT);
+    const pages = await getPages();
 
     const { data } = await client.query({
         query: getCategoryByUrlKey,
