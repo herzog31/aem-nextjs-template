@@ -1,5 +1,5 @@
-query getProductByUrlKey($urlKey: String!) {
-  products(filter: { url_key: { eq: $urlKey } }, pageSize: 1, currentPage: 1) {
+query getProductBySku($sku: String!) {
+  products(filter: { sku: { eq: $sku } }, pageSize: 1, currentPage: 1) {
     items {
       name
       sku
@@ -45,6 +45,29 @@ query getProductByUrlKey($urlKey: String!) {
           }
         }
       }
+    }
+  }
+  productPageExtensionList(
+    filter: { product: { _expressions: [{ value: $sku }] } }
+    limit: 1
+  ) {
+    items {
+      _path
+      product
+      banner {
+        ... on ImageRef {
+          type
+          height
+          width
+          mimeType
+          _publishUrl
+        }
+      }
+      stylist {
+        html
+        plaintext
+      }
+      styling
     }
   }
 }

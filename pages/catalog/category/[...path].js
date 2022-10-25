@@ -38,7 +38,7 @@ export default function Category(props) {
                 <div className={`max-w-2xl px-4 py-10 mx-auto sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8 ${styling}`}>
                     <h1 className="pb-5 text-2xl font-extrabold tracking-tight text-gray-900">{category.name}</h1>
                     {banner?._publishUrl && <img className="object-cover h-60 w-full rounded-md" src={banner._publishUrl} alt="Hero" />}
-                    {description?.plaintext && <div className="min-h-full items-center justify-center my-10 px-4 py-6 rounded-md sm:px-6 lg:px-8 bg-slate-100">{description.plaintext}</div>}
+                    {description?.plaintext && <div className="items-center justify-center my-10 px-4 py-6 rounded-md sm:px-6 lg:px-8 bg-slate-100">{description.plaintext}</div>}
                     <div className="grid grid-cols-1 mt-6 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                         {category.products.items.map((product, index) => <ProductCard product={product} highlighted={highlightedProducts?.includes(product.sku)} key={product.sku} priority={index === 0} />)}
                     </div>
