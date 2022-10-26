@@ -18,7 +18,8 @@ import client from '../../../lib/graphqlClient';
 import Layout from '../../../components/layout';
 import getPages from '../../../lib/getPages';
 import importCSROnly from '../../../lib/importCSROnly';
-import getProductByUrlKey from './getProductByUrlKey.graphql';
+import getProductBySku from './getProductBySku.graphql';
+import getProductByRoute from './getProductByRoute.graphql';
 import Gallery from '../../../components/Gallery';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import Login from '../../../components/Login';
@@ -43,7 +44,8 @@ export default function Product(props) {
     };
   }, []);
 
-  const { product, pages } = props;
+  const { product, pages, extension } = props;
+  const { banner, stylist, styling } = extension || {};
 
   if (!product) {
     return <Error statusCode={404} />;
@@ -75,8 +77,10 @@ export default function Product(props) {
       </Head>
       <section>
         <div className="bg-white">
-          <div className="max-w-2xl px-4 py-10 mx-auto sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
+          <div className={`max-w-2xl px-4 py-10 mx-auto sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8 ${styling}`}>
             <Breadcrumbs categories={categories} product={product} />
+
+            {banner?._publishUrl && <img className="object-cover h-60 mb-6 w-full rounded-md" src={banner._publishUrl} alt="Hero" />}
 
             <div className="gap-8 flex flex-col md:flex-row">
               <div className="basis-1/3">
@@ -88,7 +92,7 @@ export default function Product(props) {
                 </h1>
 
                 <p className="text-3xl tracking-tight text-gray-900 mb-6">
-                  $192
+                  {formatter.format(value)}
                 </p>
 
                 <form ref={optionsRef} className="flex flex-col gap-6 mb-8">
@@ -113,6 +117,8 @@ export default function Product(props) {
                   )}
                 </div>
 
+                {stylist?.plaintext && <div className="items-center justify-center my-10 px-4 py-6 rounded-md sm:px-6 lg:px-8 bg-slate-100">{stylist.plaintext}</div>}
+
                 <span
                   className="text-sm text-gray-600"
                   dangerouslySetInnerHTML={{ __html: html }}
@@ -128,16 +134,31 @@ export default function Product(props) {
 
 export async function getServerSideProps({ params }) {
   const pages = await getPages();
+  let product = null;
+
+  // Find product SKU by URL
+  const { data : routeData } = await client.query({
+    query: getProductByRoute,
+    variables: {
+        url: params['url-key'] + '.html'
+    }
+  });
+
+  const sku = routeData.route?.sku || null;
+  if (!sku) {
+      return { props: { pages, product } };
+  }
 
   const { data } = await client.query({
-    query: getProductByUrlKey,
+    query: getProductBySku,
     variables: {
-      urlKey: params['url-key'],
+      sku,
     },
   });
 
-  const product = data?.products?.items?.[0] || null;
+  product = data?.products?.items?.[0] || null;
+  const extension = data?.productPageExtensionList?.items?.[0] || null;
   return {
-    props: { pages, product },
+    props: { pages, product, extension },
   };
 }

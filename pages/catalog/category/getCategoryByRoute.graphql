@@ -1,0 +1,10 @@
+query getCategoryByRoute($url: String!) {
+    route(url: $url) {
+        redirect_code
+        relative_url
+        type
+        ... on CategoryTree {
+            uid
+        }
+    }
+}

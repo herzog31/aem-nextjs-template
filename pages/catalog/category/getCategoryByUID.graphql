@@ -1,6 +1,6 @@
-query getCategoryByUrlKey($urlKey: String!) {
+query getCategoryByUID($uid: String!) {
     categories(
-        filters: { url_key: { eq: $urlKey } }
+        filters: { category_uid: { eq: $uid } }
         pageSize: 1
         currentPage: 1
     ) {
@@ -27,6 +27,30 @@ query getCategoryByUrlKey($urlKey: String!) {
                     __typename
                 }
             }
+        }
+    }
+    categoryPageExtensionList(
+        filter: { category: { _expressions: [{ value: $uid }] } }
+        limit: 1
+    ) {
+        items {
+            _path
+            category
+            banner {
+                ... on ImageRef {
+                    type
+                    height
+                    width
+                    mimeType
+                    _publishUrl
+                }
+            }
+            description {
+                html
+                plaintext
+            }
+            styling
+            highlightedProducts
         }
     }
 }

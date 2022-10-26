@@ -1,0 +1,29 @@
+query getProductByRoute($url: String!) {
+    route(url: $url) {
+        redirect_code
+        relative_url
+        type
+        __typename
+        ... on ConfigurableProduct {
+            sku
+        }
+        ... on SimpleProduct {
+            sku
+        }
+        ... on DownloadableProduct {
+            sku
+        }
+        ... on BundleProduct {
+            sku
+        }
+        ... on GroupedProduct {
+            sku
+        }
+        ... on GiftCardProduct {
+            sku
+        }
+        ... on VirtualProduct {
+            sku
+        }
+    }
+}
